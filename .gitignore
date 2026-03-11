@@ -1,0 +1,41 @@
+# ─── Secrets ──────────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+
+# ─── Dependencies ─────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ─── Runtime / Logs ───────────────────────────────────────────────
+*.log
+logs/
+pids/
+*.pid
+
+# ─── OS ───────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Editors ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── Test output ──────────────────────────────────────────────────
+coverage/
+.nyc_output/
+
+# ─── Build artefacts ──────────────────────────────────────────────
+dist/
+build/
+
+# ─── Local project copies / tarballs ──────────────────────────────
+bharat-erp/
+bharat-erp-dashboard/
+*.tar.gz
+*.pptx
+.vercel/

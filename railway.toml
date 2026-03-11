@@ -1,0 +1,48 @@
+# ─────────────────────────────────────────────────────────────────
+# Bharat ERP — Railway Configuration (Sprint 6)
+# Docs: https://docs.railway.app/reference/config-as-code
+# ─────────────────────────────────────────────────────────────────
+
+[build]
+# Use our Dockerfile for a reproducible, minimal production image
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "node api/server.js"
+healthcheckPath = "/health"
+healthcheckTimeout = 60          # seconds — give Mongo time to connect
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+
+# ── Required environment variables ────────────────────────────────
+# Set these in Railway dashboard → Service → Variables
+# (Never commit real values — this file is checked into git)
+#
+# MANDATORY:
+#   MONGODB_URI          MongoDB Atlas connection string
+#   ANTHROPIC_API_KEY    Claude API key (Anthropic console)
+#   API_MASTER_KEY       Random secret — protects all /api/* routes
+#   NODE_ENV             Set to: production
+#
+# RECOMMENDED:
+#   ALLOWED_ORIGINS      Comma-separated frontend URLs, e.g.
+#                          https://bharat-erp-dashboard.vercel.app
+#
+# WHATSAPP (optional — platform runs in mock mode without these):
+#   TWILIO_ACCOUNT_SID   From https://console.twilio.com
+#   TWILIO_AUTH_TOKEN    From https://console.twilio.com
+#   TWILIO_WA_FROM       whatsapp:+14155238886  (Twilio sandbox)
+#   FM_WHATSAPP_NUMBER   whatsapp:+91XXXXXXXXXX (Finance Manager)
+#   CFO_WHATSAPP_NUMBER  whatsapp:+91XXXXXXXXXX (CFO, optional)
+#   VALIDATE_TWILIO_SIG  true  (enable in production)
+#
+# BUSINESS RULES (sensible defaults apply if not set):
+#   AUTO_APPROVAL_LIMIT  100000   (auto-approve invoices ≤ ₹1L)
+#   FRAUD_RISK_THRESHOLD 40       (hold invoices with score > 40)
+#   HIGH_VALUE_LIMIT     500000   (escalate invoices > ₹5L to CFO)
+#   MIN_RFQ_VENDORS      2        (minimum vendors on each RFQ)
+#   MAX_RFQ_VENDORS      5        (maximum vendors on each RFQ)
+#   RFQ_RESPONSE_DAYS    7        (days vendors have to respond)
+#   APPROVAL_TIMEOUT_HOURS 24     (hours before pending approval escalates)
+#   COMPANY_ADDRESS      "123 MG Road, Bengaluru 560001"
